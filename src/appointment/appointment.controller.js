@@ -65,10 +65,10 @@ export const updateAppointment = async (req, res) => {
 
     const appointment = await Appointment.findByIdAndUpdate(uid, data, {new:true});
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       msg: 'Appointment Updated',
-      user,
+      appointment
   });
   } catch (err) {
     res.status(500).json({
@@ -78,4 +78,56 @@ export const updateAppointment = async (req, res) => {
   });
   }
   
+}
+
+export const getAppointmentByUser = async (req, res) => {
+  const { limite = 10, desde = 0 } = req.query;
+  const query = { status: true };
+  
+      try {
+        const  appointment = await Appointment.find(query)
+          .skip(Number(desde))
+          .limit(Number(limite));
+  
+          const AppointmentWithUser = await Promise.all(appointment.map(async (app) => {
+            const usuario = await User.findById(app.user);
+            return{
+              ...app.toObject(),
+              user: usuario ? usuario.nombre : "usuario no encontrado"
+            };
+          }));
+  
+          const total = await Appointment.countDocuments(query);
+  
+          res.status(200).json({
+              success: true,
+              total,
+              appointment : AppointmentWithUser
+          });
+      } catch (error) {
+          res.status(500).json({
+              success: false,
+              message: 'Error al obtener las citas',
+              error
+          });
+      }
+}
+
+export const cancelAppointment = async (req, res) => {
+  try{
+          const { uid } = req.params
+          const app = await Appointment.findByIdAndUpdate(uid, {status: "CANCELLED"}, {new: true})
+  
+          return res.status(200).json({
+              success: true,
+              message: "Appointment Canceled",
+              app
+          })
+      }catch(err){
+          return res.status(500).json({
+              success: false,
+              message: "Error canceling appointment",
+              error: err.message
+          })
+      }
 }
