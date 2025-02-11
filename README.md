@@ -141,7 +141,7 @@ SECRETORPRIVATEKEY=<tu_secreto_jwt>
   - **Cuerpo:**
     ```json
     {
-      "date": "2023-10-15T10:00:00Z",
+      "newDate": "2023-10-15T10:00:00Z",
     }
     ```
 
