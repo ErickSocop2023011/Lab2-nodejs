@@ -61,9 +61,9 @@ export const saveAppointment = async (req, res) => {
 export const updateAppointment = async (req, res) => {
   try {
     const { uid } = req.params;
-    const data = req.body
+    const {newDate} = req.body
 
-    const appointment = await Appointment.findByIdAndUpdate(uid, data, {new:true});
+    const appointment = await Appointment.findByIdAndUpdate(uid, {date:newDate}, {new:true});
 
     return res.status(200).json({
       success: true,
@@ -131,3 +131,5 @@ export const cancelAppointment = async (req, res) => {
           })
       }
 }
+
+

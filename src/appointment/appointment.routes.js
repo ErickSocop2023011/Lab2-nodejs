@@ -8,7 +8,7 @@ const router = Router();
 
 router.post("/createAppointment", createAppointmentValidator, saveAppointment);
 
-router.put("/updateAppointment/:uid", updateAppointmentValidator, updateAppointment);
+router.patch("/updateAppointment/:uid", updateAppointmentValidator, updateAppointment);
 
 router.get("/findAppUser/:uid", getUserByIdValidator, getUserById)
 

@@ -7,9 +7,9 @@ Esta API está diseñada para gestionar citas para adopciones de mascotas. Inclu
 Cree un archivo `.env` en el directorio raíz y agregue las siguientes variables:
 
 ```
-MONGO_URI=<tu_cadena_de_conexión_mongodb>
+URI_MONGO=<tu_cadena_de_conexión_mongodb>
 PORT=<tu_puerto_del_servidor>
-JWT_SECRET=<tu_secreto_jwt>
+SECRETORPRIVATEKEY=<tu_secreto_jwt>
 ```
 
 ## Endpoints de la API
@@ -58,6 +58,11 @@ JWT_SECRET=<tu_secreto_jwt>
   - **URL:** `/adoptionSystem/v1/user/`
   - **Método:** `GET`
 
+- **Listar Citas del Usuario**
+  - **URL:** `/adoptionSystem/v1/user/findAppByUser/:uid`
+  - **Método:** `GET`
+
+
 - **Actualizar Contraseña del Usuario**
   - **URL:** `/adoptionSystem/v1/user/updatePassword/:uid`
   - **Método:** `PATCH`
@@ -76,6 +81,16 @@ JWT_SECRET=<tu_secreto_jwt>
     {
       "name": "string",
       "surname": "string"
+    }
+    ```
+
+- **Actualizar Foto del Usuario**
+  - **URL:** `/adoptionSystem/v1/user/updateProfPic/:uid`
+  - **Método:** `PATCH`
+  - **Cuerpo:**
+    ```form-data
+    {
+      "profilePicture": "string"
     }
     ```
 
@@ -120,22 +135,16 @@ JWT_SECRET=<tu_secreto_jwt>
       "user": "string"
     }
     ```
+- **Actualizar Cita**
+  - **URL:** `/adoptionSystem/v1/appointment/updateAppointment/:uid`
+  - **Método:** `PATCH`
+  - **Cuerpo:**
+    ```json
+    {
+      "date": "2023-10-15T10:00:00Z",
+    }
+    ```
 
-## Funcionalidades Adicionales
-
-Las siguientes funcionalidades necesitan ser desarrolladas:
-
-1. **Actualizar Foto del Usuario**
-   - Descripción: Implementar funcionalidad para actualizar la foto de perfil del usuario.
-
-2. **Listar Citas**
-   - Descripción: Implementar funcionalidad para listar todas las citas de un usuario.
-
-3. **Actualizar Cita**
-   - Descripción: Implementar funcionalidad para actualizar una cita existente.
-
-4. **Cancelar Cita**
-   - Descripción: Implementar funcionalidad para cancelar una cita existente.
-
-5. **Entrega**
-   - Funcionalidades deben ser parte del código fuente y ser entregadas en tiempo y forma indicada en clase.
+- **Cancelar Cita**
+  - **URL:** `/adoptionSystem/v1/appointment/cancelApp/:uid`
+  - **Método:** `DELETE`
